@@ -38,6 +38,14 @@ class BurgerBuilder extends Component {
         }, 0)
         this.setState({purchasable : totalIngredients > 0})
     }
+
+    purchaseCancelHandler = () => {
+        this.setState({purchasing: false})
+    }
+    
+    purchaseContinueHandler = () => {
+        //
+    }
     
     addIngredientHandler = (type) => {
         let currentCount = this.state.ingredients[type]
@@ -71,8 +79,11 @@ class BurgerBuilder extends Component {
             disabledInfo[key] = disabledInfo[key] <= 0
         return (
             <Aux>
-                <Modal show={this.state.purchasing}>
-                    <OrderSummary ingredients={this.state.ingredients}/>
+                <Modal show={this.state.purchasing} modalClose={this.purchaseCancelHandler}>
+                    <OrderSummary ingredients={this.state.ingredients}
+                        purchaseCancelled={this.purchaseCancelHandler}
+                        purchaseContinued={this.purchaseContinueHandler}
+                        price={this.state.totalPrice}/>
                 </Modal>
                 <Burger ingredients={this.state.ingredients}></Burger>
                 <BuildControls onIngredientAdd={this.addIngredientHandler}
