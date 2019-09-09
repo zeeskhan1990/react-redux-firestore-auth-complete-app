@@ -4,6 +4,7 @@ import Burger from '../../components/Burger/Burger'
 import BuildControls from '../../components/Burger/BuildControls/BuildControls'
 import Modal from '../../components/UI/Modal/Modal'
 import OrderSummary from '../../components/Burger/OrderSummary/OrderSummary'
+import axios, {convertToPostBody} from "../../axios-order"
 
 const INGREDIENT_PRICES = {
     salad: 1,
@@ -42,10 +43,28 @@ class BurgerBuilder extends Component {
     purchaseCancelHandler = () => {
         this.setState({purchasing: false})
     }
+
+
     
     purchaseContinueHandler = () => {
-        //
-    }
+        const order = {
+            ingredients: this.state.ingredients,
+            price: this.state.totalPrice
+        }
+        const postBody = convertToPostBody(order)
+        debugger
+        axios.post('documents/cities',
+        postBody,
+        {
+            "headers":{
+                "post": {
+                    "Content-Type": "application/json"
+                }
+            }
+        }
+    ).then(res => console.log(res))
+    .catch(err => console.log(err))
+}
     
     addIngredientHandler = (type) => {
         let currentCount = this.state.ingredients[type]
