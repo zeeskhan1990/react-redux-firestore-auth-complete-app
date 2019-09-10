@@ -53,6 +53,8 @@ export const convertToPostBody = (sourceObj) => {
                         }
                     }
                     break
+                default:
+                    console.log("--None of the data types matched--")
             }
         })
         return desObj
@@ -62,5 +64,43 @@ export const convertToPostBody = (sourceObj) => {
     }
     return postBodyObj
 }
+
+export const convertResponse = (res) => {
+    function convert(input, desObj={}) {
+        Object.keys(input).forEach((item) => {
+            const currentItemObject = input[item]
+            switch(Object.keys(currentItemObject)[0]) {
+                case "stringValue":
+                    desObj[item] =  currentItemObject["stringValue"]
+                    break
+                case "integerValue":
+                    desObj[item] =  currentItemObject["integerValue"]
+                    break
+                case "booleanValue":
+                    desObj[item] =  currentItemObject["booleanValue"]
+                    break
+                case "nullValue":
+                    desObj[item] =  null
+                    break
+                case "mapValue":
+                    desObj[item] =  convert(currentItemObject["mapValue"]["fields"])
+                    break
+                case "arrayValue":
+                    desObj[item] =  currentItemObject["arrayValue"]["values"].map((arrayItem) => {
+                        debugger
+                        const temp = convert({arrayItem})
+                        return temp.arrayItem
+                    })
+                    break
+                default:
+                    console.log('None matched for conversion')
+            } 
+        })
+        return desObj
+    }
+    return convert(res.data.fields)
+}
+
+
 
 export default instance
