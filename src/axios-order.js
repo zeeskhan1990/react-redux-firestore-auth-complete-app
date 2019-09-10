@@ -98,7 +98,9 @@ export const convertResponse = (res) => {
         })
         return desObj
     }
-    return convert(res.data.fields)
+    debugger
+    const conversionFields =  res.fields ? res.fields : res.data.fields
+    return convert(conversionFields)
 }
 
 
