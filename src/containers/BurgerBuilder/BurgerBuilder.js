@@ -7,6 +7,7 @@ import OrderSummary from '../../components/Burger/OrderSummary/OrderSummary'
 import axios, {convertToPostBody, convertResponse} from "../../axios-order"
 import Spinner from "../../components/UI/Spinner/Spinner"
 import withErrorHandler from "../../hoc/withErrorHandler/withErrorHandler"
+import classes from './BurgerBuilder.css'
 
 const INGREDIENT_PRICES = {
     salad: 1,
@@ -111,14 +112,16 @@ class BurgerBuilder extends Component {
         if ( this.state.ingredients ) {
             burger = (
                 <Aux>
-                    <Burger ingredients={this.state.ingredients} />
-                    <BuildControls
-                        onIngredientAdd={this.addIngredientHandler}
-                        onIngredientRemove={this.removeIngredientHandler}
-                        disabled={disabledInfo}
-                        purchasable={this.state.purchasable}
-                        ordered={this.purchaseHandler}
-                        price={this.state.totalPrice} />
+                    <div className={classes.BurgerBuilder}>
+                        <Burger ingredients={this.state.ingredients} />
+                        <BuildControls
+                            onIngredientAdd={this.addIngredientHandler}
+                            onIngredientRemove={this.removeIngredientHandler}
+                            disabled={disabledInfo}
+                            purchasable={this.state.purchasable}
+                            ordered={this.purchaseHandler}
+                            price={this.state.totalPrice} />
+                    </div>
                 </Aux>
             );
             orderSummary = <OrderSummary
@@ -133,7 +136,7 @@ class BurgerBuilder extends Component {
         // {salad: true, meat: false, ...}
         return (
             <Aux>
-                <Modal show={this.state.purchasing} modalClosed={this.purchaseCancelHandler}>
+                <Modal show={this.state.purchasing} modalClosed={this.purchaseCancelHandler} modalHeader="Your Order">
                     {orderSummary}
                 </Modal>
                 {burger}

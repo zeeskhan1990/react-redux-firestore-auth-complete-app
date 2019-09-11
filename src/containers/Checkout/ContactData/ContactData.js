@@ -7,28 +7,49 @@ import FormInput from '../../../components/UI/FormInput/FormInput'
 
 class ContactData extends Component {
     state = {
-        name: 'default',
-        email: 'default',
-        address: {
-            street: 'default',
-            postalCode: 'default'
-        },
+        orderForm: {
+                name: this.createOrderFormElement('input', {
+                    type:'text',
+                    placeholder: 'Your Name'
+                }, ''),
+                street: this.createOrderFormElement('input', {
+                    type:'text',
+                    placeholder: 'Your Street'
+                }, ''),
+                zipCode: this.createOrderFormElement('input', {
+                    type:'text',
+                    placeholder: 'Your Zip Code'
+                }, ''),
+                country: this.createOrderFormElement('input', {
+                    type:'text',
+                    placeholder: 'Your Country of Residence'
+                }, ''),
+                email: this.createOrderFormElement('input', {
+                    type:'email',
+                    placeholder: 'Your Email'
+                }, ''),
+                deliveryMethod: this.createOrderFormElement('select', {
+                    options: [{value: 'fastest', displayValue: 'Fastest'}, {value: 'cheapest', displayValue: 'Cheapest'}]
+                }, '')
+        },        
         loading: false
+    }
+
+    createOrderFormElement(elementType, elementConfig, value) {
+        return { elementType, elementConfig, value }
     }
 
     orderHandler = (ev) => {
         ev.preventDefault()
-        //this.props.ingredients
         this.setState({loading: true})
+        const formData = {}
+        for(let formElementId in this.state.orderForm) {
+            formData[formElementId] = this.state.orderForm[formElementId].value
+        }
         const order = {
             ingredients: this.props.ingredients,
             price: this.props.price,
-            customer: {
-                name: this.state.name,
-                address: this.state.address,
-                email: this.state.email
-            },
-            deliveryMethod: 'fastest'
+            orderData: formData
         }
         const postBody = convertToPostBody(order)
         axios.post('documents/orders',
@@ -52,15 +73,34 @@ class ContactData extends Component {
     .finally(() => null)
     }
 
+    formInputChangedHandler = (ev, inputIdentifier) => {
+        //Would not be a deep clone
+        //const updatedOrderForm = {...this.state.orderForm}
+        const updatedOrderForm =  JSON.parse(JSON.stringify(this.state.orderForm))
+        updatedOrderForm[inputIdentifier].value = ev.target.value
+        this.setState({orderForm: updatedOrderForm})
+    }
+
     render() {
+        let formElementsArray = []
+        for (let key in this.state.orderForm) {
+            formElementsArray.push({
+                id: key,
+                config: this.state.orderForm[key]
+            })
+        }
         let form = (
-            <form>
-                    <FormInput inputtype="input" type="text" name="name" placeholder="Your Name" />
-                    <FormInput inputtype="input" type="email" name="email" placeholder="Your Email" />
-                    <FormInput inputtype="input" type="text" name="street" placeholder="Street" />
-                    <FormInput inputtype="input" type="text" name="postal" placeholder="Postal Code" />
-                    <Button btnType="Success" clicked={this.orderHandler}>Order</Button>
-                </form>
+            <form onSubmit={this.orderHandler}>
+                {formElementsArray.map((formElement) => (
+                    <FormInput 
+                        key={formElement.id}
+                        elementType={formElement.config.elementType} 
+                        elementConfig={formElement.config.elementConfig}
+                        value={formElement.config.value}
+                        changed={(ev) => this.formInputChangedHandler(ev, formElement.id)}/>
+                ))}
+                <Button btnType="Success" clicked={this.orderHandler}>Order</Button>
+            </form>
         ) 
         if(this.state.loading)
             form = <Spinner/>

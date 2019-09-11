@@ -1,0 +1,7 @@
+@media (min-width:768px) {
+    .BurgerBuilder {
+        display: flex;
+        margin: 20px;
+        justify-content: center;
+    }
+}

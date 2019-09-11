@@ -17,7 +17,13 @@ class Modal extends Component {
                     transform: this.props.show ? 'translateY(0)' : 'translateY(-100vh)',
                     opacity: this.props.show ? '1' : '0'
                 }}>
-                {this.props.children}
+                <div className={classes.ModalHeader}>
+                    <h3>{this.props.modalHeader || 'Confirm'}</h3>
+                </div>
+                <div className={classes.ModalBody}>
+                    {this.props.children}
+                </div>
+                
             </div>
         </Aux>
         )
