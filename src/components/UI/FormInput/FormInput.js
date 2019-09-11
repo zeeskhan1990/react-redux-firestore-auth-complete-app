@@ -3,28 +3,32 @@ import classes from './FormInput.css'
 
 const FormInput = (props) => {
     let formInputElement = null
-    debugger
+    let formInputClasses = [classes.FormInputElement]
+    let validationError = null
+    if(props.invalid && props.touched) {
+        formInputClasses.push(classes.Invalid)
+        validationError = <p>Please enter a valid {props.id}!</p>;
+    }
+        
     switch(props.elementType) {
         case ("input"):
-            formInputElement = <input className={classes.FormInputElement}
+            formInputElement = <input className={formInputClasses.join(' ')}
             onChange={props.changed} {...props.elementConfig} value={props.value}/>
             break
         case ("textarea"):
-            formInputElement = <textarea className={classes.FormInputElement}
+            formInputElement = <textarea className={formInputClasses.join(' ')}
             onChange={props.changed} {...props.elementConfig} value={props.value}/>
             break
         case ("select"):
-            debugger
             formInputElement = (
-            <select className={classes.FormInputElement} value={props.value}onChange={props.changed}>
+            <select className={formInputClasses.join(' ')} value={props.value}onChange={props.changed}>
                 {props.elementConfig.options.map(option => (
                     <option key={option.value} value={option.value}>{option.displayValue}</option>
                 ))}
             </select>)
-            debugger
             break
         default:
-            formInputElement = <input className={classes.FormInputElement}
+            formInputElement = <input className={formInputClasses.join(' ')}
             onChange={props.changed} {...props.elementConfig} value={props.value}/>
             break
     }
@@ -32,6 +36,7 @@ const FormInput = (props) => {
         <div className={classes.FormInput}>
             <label className={classes.Label}>{props.label}</label>
             {formInputElement}
+            {validationError}
         </div>
      );
 }
