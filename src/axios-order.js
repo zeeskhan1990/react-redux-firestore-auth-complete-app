@@ -87,7 +87,6 @@ export const convertResponse = (res) => {
                     break
                 case "arrayValue":
                     desObj[item] =  currentItemObject["arrayValue"]["values"].map((arrayItem) => {
-                        debugger
                         const temp = convert({arrayItem})
                         return temp.arrayItem
                     })
@@ -98,7 +97,6 @@ export const convertResponse = (res) => {
         })
         return desObj
     }
-    debugger
     const conversionFields =  res.fields ? res.fields : res.data.fields
     return convert(conversionFields)
 }

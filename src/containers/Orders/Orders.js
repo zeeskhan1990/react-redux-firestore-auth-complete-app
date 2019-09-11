@@ -14,7 +14,6 @@ class Orders extends Component {
             console.log(res)
             let allOrders = []
             res.data.documents.forEach(item => {
-                debugger
                 const orderId = item.name.split(/[/ ]+/).pop()
                 allOrders.push({...convertResponse(item), id: orderId})
             });
@@ -31,11 +30,11 @@ class Orders extends Component {
             <div>
                 {this.state.orders.map((order) => {
                     return (
-                        <Order key={order.id}/>
+                        <Order key={order.id}
+                        ingredients={order.ingredients}
+                        price={order.price}/>
                     )
                 })}
-                <Order/>
-                <Order/>
             </div>
          );
     }
