@@ -69,15 +69,19 @@ export const convertResponse = (res) => {
     function convert(input, desObj={}) {
         Object.keys(input).forEach((item) => {
             const currentItemObject = input[item]
+            debugger
             switch(Object.keys(currentItemObject)[0]) {
                 case "stringValue":
                     desObj[item] =  currentItemObject["stringValue"]
                     break
                 case "integerValue":
-                    desObj[item] =  currentItemObject["integerValue"]
+                    desObj[item] =  parseInt(currentItemObject["integerValue"])
+                    break
+                case "doubleValue":
+                    desObj[item] =  parseFloat(currentItemObject["integerValue"])
                     break
                 case "booleanValue":
-                    desObj[item] =  currentItemObject["booleanValue"]
+                    desObj[item] =  Boolean(currentItemObject["booleanValue"])
                     break
                 case "nullValue":
                     desObj[item] =  null
@@ -93,7 +97,8 @@ export const convertResponse = (res) => {
                     break
                 default:
                     console.log('None matched for conversion')
-            } 
+            }
+            debugger 
         })
         return desObj
     }
