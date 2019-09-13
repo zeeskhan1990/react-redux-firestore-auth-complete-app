@@ -1,4 +1,5 @@
 import * as actionTypes from '../actions/actionTypes'
+import {updateObject} from '../StoreUtils' 
 
 const initialState = {
     orders:[],
@@ -30,10 +31,11 @@ const reducer = (currentState=initialState, action) => {
                     loading: false
                 }
         case actionTypes.PURCHASE_INIT:
-                return {
+                return updateObject(currentState, {purchased: false})
+                /* return {
                     ...currentState,
                     purchased: false
-                }
+                } */
         case actionTypes.FETCH_ORDERS_START:
                 return {
                     ...currentState,
