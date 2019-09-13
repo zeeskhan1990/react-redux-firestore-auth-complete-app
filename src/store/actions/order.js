@@ -36,7 +36,7 @@ export const purchaseBurger = (orderData) => {
         ).then(res => {
             console.log(res)
             const orderId = res.data.name.split(/[/ ]+/).pop()
-            debugger
+            
             const response = convertResponse(res)
             dispatch(purchaseBurgerSuccess(orderId, orderData))
         })

@@ -32,9 +32,12 @@ class Orders extends Component {
                 <div>
                     {this.props.orders.map((order) => {
                         return (
-                            <Order key={order.id}
-                            ingredients={order.ingredients}
-                            price={order.price}/>
+                            <div key={order.id}>
+                                <Order key={order.id}
+                                ingredients={order.ingredients}
+                                price={order.price}/>
+                            </div>
+                            
                         )
                     })}
                 </div>

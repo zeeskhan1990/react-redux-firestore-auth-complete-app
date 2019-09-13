@@ -1,8 +1,22 @@
 .Order {
-    width: 80%;
+    width: 100%;
     border: 1px solid #eee;
     box-shadow: 0 2px 3px #ccc;
     padding: 10px;
     margin: 10px auto;
     box-sizing: border-box;
+}
+
+.OrderDetails {                  
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+
+@media (min-width: 768px) {
+    .Order {
+        width: 60%;
+        display: flex;
+    }
 }

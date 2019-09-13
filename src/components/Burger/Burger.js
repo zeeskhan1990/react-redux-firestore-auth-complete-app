@@ -3,6 +3,7 @@ import classes from './Burger.css'
 import BurgerIngredient from './BurgerIngredient/BurgerIngredient'
 
 const burger = (props) => {
+    
     let ingredientList = []
     for (let ingredientType of Object.keys(props.ingredients)) {
         const ingredientAmount = props.ingredients[ingredientType]
@@ -12,8 +13,9 @@ const burger = (props) => {
     }
     if (ingredientList.length === 0)
         ingredientList = "Please add some ingredients"
+    const burgerClasses = props.className ? [props.className, classes.Burger].join(' ') : classes.Burger
     return ( 
-        <div className={classes.Burger}>
+        <div className={burgerClasses}>
             <BurgerIngredient type="bread-top"/>
                 {ingredientList}
             <BurgerIngredient type="bread-bottom"/>

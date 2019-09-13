@@ -32,7 +32,7 @@ export const initIngredients = () => {
     return dispatch => {
         axios.get( 'documents/ingredients/all' )
             .then( response => {
-                debugger
+                
                dispatch(setIngredients(convertResponse(response)));
             } )
             .catch( error => {

@@ -69,7 +69,7 @@ export const convertResponse = (res) => {
     function convert(input, desObj={}) {
         Object.keys(input).forEach((item) => {
             const currentItemObject = input[item]
-            debugger
+            
             switch(Object.keys(currentItemObject)[0]) {
                 case "stringValue":
                     desObj[item] =  currentItemObject["stringValue"]
@@ -98,7 +98,7 @@ export const convertResponse = (res) => {
                 default:
                     console.log('None matched for conversion')
             }
-            debugger 
+             
         })
         return desObj
     }
