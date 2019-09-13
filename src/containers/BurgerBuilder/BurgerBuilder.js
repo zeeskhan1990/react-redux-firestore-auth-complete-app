@@ -11,7 +11,7 @@ import classes from './BurgerBuilder.css'
 import {connect} from "react-redux"
 
 //index is implicit
-import * as burgerBuilderActions from "../../store/actions/index"
+import * as Actions from "../../store/actions/index"
 
 class BurgerBuilder extends Component {
     state = {
@@ -63,6 +63,7 @@ class BurgerBuilder extends Component {
         pathname: '/checkout',
         search: `?${queryString}`
     });*/
+    this.props.onInitPurchase()
     this.props.history.push({pathname: '/checkout'});
 }
     
@@ -147,9 +148,10 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        onIngredientAdded: (ingredientName) => dispatch(burgerBuilderActions.addIngredient(ingredientName)),
-        onIngredientRemoved: (ingredientName) => dispatch(burgerBuilderActions.removeIngredient(ingredientName)),
-        initIngredients: () => dispatch(burgerBuilderActions.initIngredients())
+        onIngredientAdded: (ingredientName) => dispatch(Actions.addIngredient(ingredientName)),
+        onIngredientRemoved: (ingredientName) => dispatch(Actions.removeIngredient(ingredientName)),
+        initIngredients: () => dispatch(Actions.initIngredients()),
+        onInitPurchase: () => dispatch(Actions.purchaseInit())
     }
 }
 
