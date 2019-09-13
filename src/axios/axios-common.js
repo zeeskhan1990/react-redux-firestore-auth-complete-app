@@ -1,9 +1,3 @@
-import axios from "axios"
-
-const instance = axios.create({
-    baseURL: 'https://firestore.googleapis.com/v1/projects/burger-builder-9f0e0/databases/(default)/'
-})
-
 export const convertToPostBody = (sourceObj) => {
     function convert(conObj, desObj={}) {
         Object.keys(conObj).forEach((key) => {
@@ -69,7 +63,7 @@ export const convertResponse = (res) => {
     function convert(input, desObj={}) {
         Object.keys(input).forEach((item) => {
             const currentItemObject = input[item]
-            
+                
             switch(Object.keys(currentItemObject)[0]) {
                 case "stringValue":
                     desObj[item] =  currentItemObject["stringValue"]
@@ -105,7 +99,3 @@ export const convertResponse = (res) => {
     const conversionFields =  res.fields ? res.fields : res.data.fields
     return convert(conversionFields)
 }
-
-
-
-export default instance

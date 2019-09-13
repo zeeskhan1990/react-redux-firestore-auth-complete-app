@@ -1,5 +1,5 @@
 import * as actionTypes from './actionTypes'
-import axios, {convertToPostBody, convertResponse} from '../../axios-order'
+import axios, {convertToPostBody, convertResponse} from '../../axios/axios-order'
 
 export const purchaseBurgerSuccess = (orderId, orderData) => {
     return {
@@ -36,7 +36,7 @@ export const purchaseBurger = (orderData) => {
         ).then(res => {
             console.log(res)
             const orderId = res.data.name.split(/[/ ]+/).pop()
-            
+            debugger
             const response = convertResponse(res)
             dispatch(purchaseBurgerSuccess(orderId, orderData))
         })

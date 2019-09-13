@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 
 import Order from '../../components/Order/Order'
-import axios, {convertResponse} from '../../axios-order'
+import axios, {convertResponse} from '../../axios/axios-order'
 import withErrorHandler from '../../hoc/withErrorHandler/withErrorHandler'
 import * as Actions from '../../store/actions/index'
 import {connect} from "react-redux"

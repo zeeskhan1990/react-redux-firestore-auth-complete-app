@@ -1,5 +1,5 @@
 import * as actionTypes from './actionTypes';
-import axios, {convertToPostBody, convertResponse} from '../../axios-order';
+import axios, {convertToPostBody, convertResponse} from '../../axios/axios-order';
 
 export const addIngredient = ( name ) => {
     return {
