@@ -1,6 +1,7 @@
 export const updateObject = (oldObject, updatedProperties) => {
-    return {
+    const updatedObject = {
         ...oldObject,
         ...updatedProperties
     }
+    return updatedObject
 }

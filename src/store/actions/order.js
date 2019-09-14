@@ -22,14 +22,15 @@ export const purchaseBurgerStart = () => {
 }
 
 export const purchaseBurger = (orderData) => {
-    return (dispatch) => {
+    return (dispatch, getState) => {
         dispatch(purchaseBurgerStart())
         return axios.post('documents/orders',
             convertToPostBody(orderData),
             {
                 "headers":{
                     "post": {
-                        "Content-Type": "application/json"
+                        "Content-Type": "application/json",
+                        "Authorization": `Bearer ${getState().auth.token}`
                     }
                 }
             }
@@ -60,9 +61,16 @@ export const fetchOrdersStart = () => {
 }
 
 export const fetchOrders = () => {
-    return (dispatch) => {
+    return (dispatch, getState) => {
         dispatch(fetchOrdersStart())
-        axios.get('/documents/orders').then((res) => {
+        axios.get('/documents/orders', {
+            "headers":{
+                "get": {
+                    "Content-Type": "application/json",
+                    "Authorization": `Bearer ${getState().auth.token}`
+                }
+            }
+        }).then((res) => {
             console.log(res)
             let allOrders = []
             res.data.documents.forEach(item => {

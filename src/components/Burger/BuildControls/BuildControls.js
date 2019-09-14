@@ -19,11 +19,11 @@ const buildControls = (props) => {
                         key={control.type} label ={control.label}
                         disabled={props.disabled[control.type]} />
                 )
-            })}
+            })} 
             <div className={classes.FinalOrder}>
                 <p><strong>Cost: $ {props.price}</strong></p>
                 <button disabled={!props.purchasable} 
-                onClick={props.ordered} className={classes.OrderButton}>Order Now!</button>
+                onClick={props.ordered} className={classes.OrderButton}>{props.isAuth ? 'Order Now!' : 'Login to order'}</button>
             </div>
             
         </div>

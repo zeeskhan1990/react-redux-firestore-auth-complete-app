@@ -11,21 +11,13 @@ const Order = (props) => {
     
     const ingredientOutput = ingredientList.map(ig => {
         const ingredientText = `${ig.amount} ${ig.name}`
-        return <span 
-        style={{textTransform: 'capitalize',
-                display: 'inline-block',
-                margin: '0 8px',
-                border: '1px solid #ccc',
-                padding: '5px',
-                marginBottom:'10px'
-            }}
-        key={ig.name}> {ingredientText}</span>
+        return <li key={ig.name}> {ingredientText}</li>
     })
     return ( 
         <div className={classes.Order}>            
             <Burger ingredients={props.ingredients}/>
             <div className={classes.OrderDetails}>
-                <div>
+                <div className={classes.OrderIngredients}>
                     {ingredientOutput}
                 </div>            
                 <div>
