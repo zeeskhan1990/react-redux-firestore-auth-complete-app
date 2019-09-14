@@ -6,6 +6,7 @@ import withErrorHandler from '../../hoc/withErrorHandler/withErrorHandler'
 import * as Actions from '../../store/actions/index'
 import {connect} from "react-redux"
 import Spinner from "../../components/UI/Spinner/Spinner"
+import {Link} from "react-router-dom"
 
 class Orders extends Component {
     componentDidMount() {
@@ -27,21 +28,36 @@ class Orders extends Component {
     }
     render() {
         let orders = <Spinner/>
-        if(!this.props.loading)
-            orders = ( 
-                <div>
-                    {this.props.orders.map((order) => {
-                        return (
-                            <div key={order.id}>
-                                <Order key={order.id}
-                                ingredients={order.ingredients}
-                                price={order.price}/>
-                            </div>
-                            
-                        )
-                    })}
-                </div>
-             )
+        if(!this.props.loading) {
+            debugger
+            if(this.props.orders.length === 0) {
+                orders = (
+                    <div style={{display:'flex', flexDirection:'column', alignItems:'center'}}>
+                        <h3>
+                            It looks like you haven't placed any order yet.
+                        </h3>
+                        <p>
+                            Place your first order <Link to="/">here</Link>
+                        </p>
+                    </div>
+                )
+            } else {
+                orders = ( 
+                    <div>
+                        {this.props.orders.map((order) => {
+                            return (
+                                <div key={order.id}>
+                                    <Order key={order.id}
+                                    ingredients={order.ingredients}
+                                    price={order.price}/>
+                                </div>
+                                
+                            )
+                        })}
+                    </div>
+                 )
+            }
+        }
         return orders
     }
 }

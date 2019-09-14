@@ -41,7 +41,7 @@
 .FinalOrder {
     display: flex;
     flex-direction: row;
-    justify-content: space-between;
+    justify-content: space-around;
     width: 100%;
     box-sizing: border-box;
     padding: 10px;

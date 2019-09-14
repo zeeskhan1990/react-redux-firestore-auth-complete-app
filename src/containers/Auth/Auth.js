@@ -19,7 +19,7 @@ class Auth extends Component {
                 placeholder: 'Password'
             }, '', {required: true, minLength: 6})
         },
-        isSignup: true,
+        isSignup: false,
         isFormValid: false
     }
 
@@ -137,7 +137,7 @@ class Auth extends Component {
                     {errorMessage}
                 <div>
                     <Button btnType="Danger" clicked={this.switchModeHandler}>
-                        {this.state.isSignup ? "Already have an account? Log in" : "Create a new account"}
+                        {this.state.isSignup ? "Already have an account? Log in" : "Not registered? Sign Up"}
                     </Button>
                 </div>
             </div>

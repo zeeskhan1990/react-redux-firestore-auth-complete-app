@@ -4,10 +4,12 @@ import {Redirect} from "react-router-dom"
 import {connect} from "react-redux"
 
 class Logout extends Component {
+    
     constructor(props) {
         super(props)
         this.props.onLogout()
     }
+
     render() { 
         return ( 
             <Redirect to="/" />

@@ -1,5 +1,6 @@
 import * as actionTypes from './actionTypes'
 import axios, {convertToPostBody, convertResponse} from '../../axios/axios-order'
+import * as creds from "../../credentials.json"
 
 export const purchaseBurgerSuccess = (orderId, orderData) => {
     return {
@@ -37,7 +38,6 @@ export const purchaseBurger = (orderData) => {
         ).then(res => {
             console.log(res)
             const orderId = res.data.name.split(/[/ ]+/).pop()
-            debugger
             const response = convertResponse(res)
             dispatch(purchaseBurgerSuccess(orderId, orderData))
         })
@@ -63,20 +63,52 @@ export const fetchOrdersStart = () => {
 export const fetchOrders = () => {
     return (dispatch, getState) => {
         dispatch(fetchOrdersStart())
-        axios.get('/documents/orders', {
+        debugger
+        /* axios.get('/documents/orders', {
             "headers":{
                 "get": {
                     "Content-Type": "application/json",
                     "Authorization": `Bearer ${getState().auth.token}`
                 }
             }
-        }).then((res) => {
+        }) */
+        axios.post(`/documents:runQuery?key=${creds.apiKey}`, {
+            "structuredQuery": {
+                "where" : {
+                    "fieldFilter" : { 
+                    "field": {"fieldPath": "userId"}, 
+                    "op":"EQUAL", 
+                    "value": {"stringValue": `${getState().auth.userId}`}
+                    }
+                },
+                "from": [{"collectionId": "orders"}],                
+                "orderBy": [
+                    {
+                        "direction": "DESCENDING",
+                        "field": {
+                            "fieldPath": "createdAt"
+                        }
+                    }
+                ]
+                }
+        }, {
+            "headers":{
+                "post": {
+                    "Content-Type": "application/json",
+                    "Authorization": `Bearer ${getState().auth.token}`
+                }
+            }
+        })
+        .then((res) => {
             console.log(res)
             let allOrders = []
-            res.data.documents.forEach(item => {
-                const orderId = item.name.split(/[/ ]+/).pop()
-                allOrders.push({...convertResponse(item), id: orderId})
-            });
+            if(res.data[0].document) {
+                res.data.forEach(item => {
+                    const currentDocument = item.document
+                    const orderId = currentDocument.name.split(/[/ ]+/).pop()
+                    allOrders.push({...convertResponse(currentDocument), id: orderId})
+                });
+            }
             console.log('All Orders -- ')
             console.log(allOrders)
             dispatch(fetchOrdersSuccess(allOrders))

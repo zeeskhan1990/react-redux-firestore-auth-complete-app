@@ -61,10 +61,13 @@ class ContactData extends Component {
         for(let formElementId in this.state.orderForm) {
             formData[formElementId] = this.state.orderForm[formElementId].value
         }
+        //Firebase fieldValue timestamp should be used for time related fields
         const order = {
             ingredients: this.props.ings,
             price: this.props.price,
-            orderData: formData
+            orderData: formData,
+            userId: this.props.userId,
+            createdAt: new Date().getTime()
         }
 
         this.props.onOrderBurger(order)
@@ -114,7 +117,7 @@ class ContactData extends Component {
         return ( 
             <div className={classes.ContactData}>
                 <h4>
-                    Enter your contact Data
+                    Enter your contact details
                 </h4>
                 {form}
             </div>
@@ -126,7 +129,8 @@ const mapStateToProps = state => {
     return {
         ings: state.burgerBuilder.ingredients,
         price: state.burgerBuilder.totalPrice,
-        loading: state.order.loading
+        loading: state.order.loading,
+        userId: state.auth.userId
     }
 }
 

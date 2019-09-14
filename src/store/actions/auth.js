@@ -24,7 +24,6 @@ export const authFail = (error) => {
 }
 
 export const logout = () => {
-    debugger
     localStorage.removeItem('token')
     localStorage.removeItem('userId')
     localStorage.removeItem('expirationDate')
@@ -37,7 +36,7 @@ export const checkAuthTimeout = (expTime) => {
     return dispatch => {
         setTimeout(() => {
             dispatch(logout())
-        }, parseInt(expTime))
+        }, parseInt(expTime) * 1000)
     }
 }
 
@@ -52,7 +51,6 @@ export const setAuthRedirectPath = (path) => {
 //Re-hydration
 export const checkAuthState = () => {
     return dispatch => {
-        debugger
         const token = localStorage.getItem('token')
         if(!token)
             dispatch(logout())
@@ -60,8 +58,8 @@ export const checkAuthState = () => {
             const expirationDate = new Date(localStorage.getItem('expirationDate'))
             const userId = localStorage.getItem('userId')
             if(expirationDate > new Date() ) {
-                dispatch(authSuccess({token, userId}))
-                dispatch(checkAuthTimeout(expirationDate.getTime() - new Date().getTime()))
+                dispatch(authSuccess({idToken: token, localId: userId}))
+                dispatch(checkAuthTimeout((expirationDate.getTime() - new Date().getTime()) / 1000))
             } else {
                 dispatch(logout())
             }
