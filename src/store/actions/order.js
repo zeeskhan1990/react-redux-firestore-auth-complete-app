@@ -63,7 +63,6 @@ export const fetchOrdersStart = () => {
 export const fetchOrders = () => {
     return (dispatch, getState) => {
         dispatch(fetchOrdersStart())
-        debugger
         /* axios.get('/documents/orders', {
             "headers":{
                 "get": {

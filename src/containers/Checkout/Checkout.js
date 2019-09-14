@@ -40,7 +40,6 @@ class Checkout extends Component {
         if(this.props.ings) {
             const purchasedRedirect = this.props.purchased ? <Redirect to="/" /> : null
             const contactDataLocation = '/checkout/contact-data'
-            debugger
             summary = (
                 <div className={classes.Checkout}>
                     {purchasedRedirect}

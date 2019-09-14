@@ -29,7 +29,6 @@ class Orders extends Component {
     render() {
         let orders = <Spinner/>
         if(!this.props.loading) {
-            debugger
             if(this.props.orders.length === 0) {
                 orders = (
                     <div style={{display:'flex', flexDirection:'column', alignItems:'center'}}>

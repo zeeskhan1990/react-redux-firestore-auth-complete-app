@@ -51,7 +51,6 @@ class App extends Component {
 
     const routes = allRoutes.map((currentRoute) => <Route key={currentRoute.path}
     path={currentRoute.path} exact={!!currentRoute.exact} component={currentRoute.component} />)
-    debugger
     return (
       <div>
         <Layout>
