@@ -26,7 +26,8 @@ class Checkout extends Component {
     }
 
     checkoutCancelledHandler = () => {
-        this.props.history.goBack();
+        //this.props.history.goBack();
+        this.props.history.replace('/');
         
     }
 
@@ -46,7 +47,6 @@ class Checkout extends Component {
                 console.log(this.props.ings[ingName])
                 totalIngredients += this.props.ings[ingName]
             })
-            debugger
             return totalIngredients > 0 ? true : false
         }
         return false
