@@ -6,7 +6,8 @@ const initialState = {
     ingredients: null,
     totalPrice: BASE_PRICE,
     error: false,
-    building: false
+    building: false,
+    loadingIngredients: false
 };
 
 const INGREDIENT_PRICES = {
@@ -50,10 +51,21 @@ const reducer = ( state = initialState, action ) => {
                 error: false,
                 building: false
             };
+        case actionTypes.FETCH_INGREDIENTS_START:
+            return {
+                ...state,
+                loadingIngredients: true
+            };
+        case actionTypes.FETCH_INGREDIENTS_SUCCESS:
+            return {
+                ...state,
+                loadingIngredients: false
+            };
         case actionTypes.FETCH_INGREDIENTS_FAILED:
             return {
                 ...state,
-                error: true
+                error: true,
+                loadingIngredients: false
             };
         default:
             return state;

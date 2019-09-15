@@ -28,12 +28,25 @@ export const fetchIngredientsFailed = () => {
     };
 };
 
+export const fetchIngredientsStart = () => {
+    return {
+        type: actionTypes.FETCH_INGREDIENTS_START
+    };
+};
+
+export const fetchIngredientsSuccess = () => {
+    return {
+        type: actionTypes.FETCH_INGREDIENTS_SUCCESS
+    };
+};
+
 export const initIngredients = () => {
     return dispatch => {
+        dispatch(fetchIngredientsStart())
         axios.get( 'documents/ingredients/all' )
-            .then( response => {
-                
+            .then( response => { 
                dispatch(setIngredients(convertResponse(response)));
+               dispatch(fetchIngredientsSuccess())
             } )
             .catch( error => {
                 dispatch(fetchIngredientsFailed());

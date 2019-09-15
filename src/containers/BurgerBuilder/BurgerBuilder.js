@@ -15,7 +15,8 @@ import * as Actions from "../../store/actions/index"
 
 class BurgerBuilder extends Component {
     state = {
-        purchasing: false
+        purchasing: false, 
+        initializing: false
     }
 
     componentDidMount() {
@@ -107,8 +108,10 @@ class BurgerBuilder extends Component {
             disabledInfo[key] = disabledInfo[key] <= 0
         }
         let orderSummary = null;
-        let burger = this.props.error ? <p>Ingredients can't be loaded!</p> : <Spinner />;
-        if ( this.props.ings ) {
+        let burger = <Spinner />;
+        if(this.props.error)
+            burger = <p>Ingredients can't be loaded!</p>
+        if ( this.props.ings && !this.props.loadingIngredients) {
             burger = (
                 <Aux>
                     <div className={classes.BurgerBuilder}>
@@ -130,9 +133,6 @@ class BurgerBuilder extends Component {
                 purchaseCancelled={this.purchaseCancelHandler}
                 purchaseContinued={this.purchaseContinueHandler} />;
         }
-        /* if ( this.state.loading ) {
-            orderSummary = <Spinner />;
-        } */
 
         return (
             <Aux>
@@ -150,7 +150,8 @@ const mapStateToProps = (state) => {
         ings: state.burgerBuilder.ingredients,
         price: state.burgerBuilder.totalPrice,
         error: state.burgerBuilder.error,
-        isAuthenticated: state.auth.token !==null
+        isAuthenticated: state.auth.token !==null,
+        loadingIngredients: state.burgerBuilder.loadingIngredients
     }
 }
 

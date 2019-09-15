@@ -33,11 +33,24 @@ class Checkout extends Component {
         this.props.history.replace('/checkout/contact-data');
     }
 
+    checkIfValidIngredients = () => {
+        if(this.props.ings) {
+            let totalIngredients = 0
+            Object.keys(this.props.ings).forEach((ingName) => {
+                console.log(this.props.ings[ingName])
+                totalIngredients += this.props.ings[ingName]
+            })
+            debugger
+            return totalIngredients > 0 ? true : false
+        }
+        return false
+    }
+
     render() {
         console.log("Checkout page")
         console.log(this.props)
         let summary = ( <Redirect to="/" />)
-        if(this.props.ings) {
+        if(this.checkIfValidIngredients()) {
             const purchasedRedirect = this.props.purchased ? <Redirect to="/" /> : null
             const contactDataLocation = '/checkout/contact-data'
             summary = (
