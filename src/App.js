@@ -33,6 +33,11 @@ class App extends Component {
     if(this.props.isAuthenticated) {
       const authOnlyRoutes = [   
         {
+          path: "/edit-order",
+          component: BurgerBuilder,
+          exact: true
+        },
+        {
           path: "/checkout",
           component: Checkout
         },   

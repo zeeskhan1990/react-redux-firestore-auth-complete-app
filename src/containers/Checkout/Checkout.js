@@ -27,10 +27,16 @@ class Checkout extends Component {
 
     checkoutCancelledHandler = () => {
         this.props.history.goBack();
+        
     }
 
     checkoutContinuedHandler = () => {
         this.props.history.replace('/checkout/contact-data');
+        
+    }
+
+    editCheckoutHandler = () => {
+        this.props.history.replace('/edit-order');
     }
 
     checkIfValidIngredients = () => {
@@ -59,6 +65,7 @@ class Checkout extends Component {
                     <CheckoutSummary 
                     ingredients={this.props.ings}
                     showContinue={this.props.location.pathname !== contactDataLocation}
+                    editCheckout={this.editCheckoutHandler}
                     checkoutCancelled={this.checkoutCancelledHandler}
                     checkoutContinued={this.checkoutContinuedHandler}/>
                     <Route path={this.props.match.url + '/contact-data'}

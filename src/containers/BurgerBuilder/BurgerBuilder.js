@@ -15,8 +15,7 @@ import * as Actions from "../../store/actions/index"
 
 class BurgerBuilder extends Component {
     state = {
-        purchasing: false, 
-        initializing: false
+        purchasing: false
     }
 
     componentDidMount() {
@@ -32,8 +31,12 @@ class BurgerBuilder extends Component {
             console.log(err)
             this.setState({error: true})
         }) */
-        console.log(this.props); 
-        this.props.initIngredients();
+        if(this.props.match.url === "/edit-order") {
+            if(!this.props.ings)
+                this.props.history.replace('/')
+        } else {
+            this.props.initIngredients();
+        }            
     }
 
     purchaseHandler = () => {
