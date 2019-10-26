@@ -21,7 +21,7 @@ const FormInput = (props) => {
             break
         case ("select"):
             formInputElement = (
-            <select className={formInputClasses.join(' ')} value={props.value}onChange={props.changed}>
+            <select className={formInputClasses.join(' ')} value={props.value} onChange={props.changed}>
                 {props.elementConfig.options.map(option => (
                     <option key={option.value} value={option.value}>{option.displayValue}</option>
                 ))}
